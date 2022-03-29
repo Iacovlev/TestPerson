@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import java.util.List;
 
 public interface PersonService {
-    HttpStatus save(PersonDTO personDTO);
+    PersonDTO savePerson(PersonDTO personDTO);
 
     List<PersonDTO> getAll();
 

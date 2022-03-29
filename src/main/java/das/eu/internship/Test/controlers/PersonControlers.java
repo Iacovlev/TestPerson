@@ -15,8 +15,8 @@ public class PersonControlers {
     private final PersonService personService;
 
     @PostMapping("/save")
-    public HttpStatus save(@RequestBody PersonDTO personDTO){
-        return personService.save(personDTO);
+    public PersonDTO savePerson(@RequestBody PersonDTO personDTO){
+        return personService.savePerson(personDTO);
     }
     @GetMapping("/all")
     public List<PersonDTO> getAll(){

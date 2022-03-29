@@ -21,10 +21,10 @@ public class PersonServiceImpl implements PersonService {
     private final PersonRepository personRepository;
     private final ModelMapper modelMapper;
     @Override
-    public HttpStatus save(PersonDTO personDTO) {
+    public PersonDTO savePerson(PersonDTO personDTO) {
         Person person = modelMapper.map(personDTO, Person.class);
         Person savedPerson = personRepository.save(person);
-        return savedPerson != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return modelMapper.map(savedPerson, PersonDTO.class);
     }
 
     @Override

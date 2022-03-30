@@ -165,6 +165,42 @@ class TestApplicationTests {
 
 		Assertions.assertNotNull(savedPerson);
 	}
+	@Test
+	void updateRequest(){
+
+
+		PersonDTO personDTO = new PersonDTO();
+		personDTO.setId(1L);
+		personDTO.setName("Alex");
+		personDTO.setAge(26L);
+
+		PersonDTO savedPerson = this.webTestClient
+				.post()
+				.uri(serverURL + "/api/service/person/save")
+				.contentType(APPLICATION_JSON)
+				.accept(APPLICATION_JSON)
+				.body(BodyInserters.fromValue(personDTO))
+				.exchange()
+				.expectStatus().is2xxSuccessful()
+				.expectBody(PersonDTO.class)
+				.returnResult()
+				.getResponseBody();
+
+
+		HttpStatus deleteUni = this.webTestClient
+				.delete()
+				.uri(serverURL + "/api/service/person/deleteById/" + savedPerson.getId())
+				.accept(APPLICATION_JSON)
+				.exchange()
+				.expectStatus().is2xxSuccessful()
+				.expectBody(HttpStatus.class)
+				.returnResult()
+				.getResponseBody();
+
+
+		Assertions.assertNotNull(savedPerson);
+	}
+
 
 	private static List<PersonDTO> getValidPerson(){
 

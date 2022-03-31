@@ -4,8 +4,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-@Data
+
 @Entity
+@Data
 @Table(name = "techpassport")
 public class TechPassport {
  @Id

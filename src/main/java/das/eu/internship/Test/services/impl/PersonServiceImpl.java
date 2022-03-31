@@ -46,9 +46,6 @@ public class PersonServiceImpl implements PersonService {
         Person newPerson = modelMapper.map(personDTO, Person.class);
         Optional<Person> optionalPerson = personRepository.findById(newPerson.getId());
         if(optionalPerson.isPresent()){
-            Person oldPerson = optionalPerson.get();
-
-            newPerson.setId(oldPerson.getId());
 
             personRepository.save(newPerson);
 
@@ -56,6 +53,7 @@ public class PersonServiceImpl implements PersonService {
         }
         return null;
     }
+
 
     @Override
     public HttpStatus deleteById(Long id) {

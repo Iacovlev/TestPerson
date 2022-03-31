@@ -152,7 +152,7 @@ class TestApplicationTests {
 				.getResponseBody();
 
 
-		HttpStatus deleteUni = this.webTestClient
+		HttpStatus deletePerson = this.webTestClient
 				.delete()
 				.uri(serverURL + "/api/service/person/deleteById/" + savedPerson.getId())
 				.accept(APPLICATION_JSON)
@@ -169,25 +169,46 @@ class TestApplicationTests {
 	void updateRequest(){
 
 
-		PersonDTO personDTO = new PersonDTO();
-		personDTO.setId(1L);
-		personDTO.setName("Alex");
-		personDTO.setAge(26L);
+		PersonDTO saveDTO = new PersonDTO();
+		saveDTO.setName("Alex");
+		saveDTO.setAge(26L);
 
 		PersonDTO savedPerson = this.webTestClient
 				.post()
 				.uri(serverURL + "/api/service/person/save")
 				.contentType(APPLICATION_JSON)
 				.accept(APPLICATION_JSON)
-				.body(BodyInserters.fromValue(personDTO))
+				.body(BodyInserters.fromValue(saveDTO))
 				.exchange()
 				.expectStatus().is2xxSuccessful()
 				.expectBody(PersonDTO.class)
 				.returnResult()
 				.getResponseBody();
 
+		assertNotNull(savedPerson);
+		assertNotNull(savedPerson.getId());
 
-		HttpStatus deleteUni = this.webTestClient
+		PersonDTO updateDto = new PersonDTO();
+		updateDto.setId(savedPerson.getId());
+		updateDto.setName("Sasha");
+		updateDto.setAge(18L);
+
+
+		PersonDTO updatePerson = this.webTestClient
+				.put()
+				.uri(serverURL + "/api/service/person/update")
+				.contentType(APPLICATION_JSON)
+				.accept(APPLICATION_JSON)
+				.body(BodyInserters.fromValue(updateDto))
+				.exchange()
+				.expectStatus().is2xxSuccessful()
+				.expectBody(PersonDTO.class)
+				.returnResult()
+				.getResponseBody();
+
+		assertNotNull(updatePerson);
+
+		HttpStatus deletePerson = this.webTestClient
 				.delete()
 				.uri(serverURL + "/api/service/person/deleteById/" + savedPerson.getId())
 				.accept(APPLICATION_JSON)
@@ -199,6 +220,8 @@ class TestApplicationTests {
 
 
 		Assertions.assertNotNull(savedPerson);
+		Assertions.assertEquals(updateDto.getId(), updatePerson.getId());
+		Assertions.assertEquals(updateDto.getName(), updatePerson.getName());
 	}
 
 

@@ -33,6 +33,7 @@ public class PersonControlers {
         return personService.update(personDTO);
     }
 
+
     @DeleteMapping("/deleteById/{id}")
     public HttpStatus deleteById(   @PathVariable Long id){
         return personService.deleteById(id);
